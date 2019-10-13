@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - FoodHunter</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/tinymce/tinymce.min.js"></script>
 
 </head>
 <body>
@@ -21,11 +22,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Send Email", "Send_Email", "Home")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Home", "Index", "Home")</li>
                         <li>@Html.ActionLink("About", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li>@Html.ActionLink("Send Email", "Send_Email", "Home")</li>
                         <li>@Html.ActionLink("Students", "Index", "Students")</li>
                     }
                 </ul>
