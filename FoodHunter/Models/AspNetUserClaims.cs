@@ -12,15 +12,13 @@ namespace FoodHunter.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Booking
+    public partial class AspNetUserClaims
     {
         public int Id { get; set; }
-        public int RestaurantId { get; set; }
-        public string CustomerId { get; set; }
-        public System.DateTime StartDateTime { get; set; }
-        public System.DateTime EndDateTime { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        public virtual Restaurants Restaurants { get; set; }
     }
 }

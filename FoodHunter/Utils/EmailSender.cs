@@ -12,16 +12,27 @@ namespace FoodHunter.Utils
     public class EmailSender
     {
         // Please use your API KEY here.
-        private const String API_KEY = "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";
+        private const String API_KEY = "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";
 
-        public void Send(String toEmail, String subject, String contents, String filename)
+        public void Send(string toEmail, String subject, String contents, String filename)
         {
+            var to_addr = new List<EmailAddress>();
+           if (toEmail.Contains(";"))
+            {
+               var addressList = toEmail.Split(';');
+                 foreach (String s in addressList)
+                {
+                    to_addr.Add(new EmailAddress(s, ""));
+                }
+            }
+
+            
             var client = new SendGridClient(API_KEY);
             var from = new EmailAddress("noreply@localhost.com", "Food Hunter");
-            var to = new EmailAddress(toEmail, "");
+            //var to = new EmailAddress(toEmail, "");
             var plainTextContent = contents;
             var htmlContent = "<p>" + contents + "</p>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var msg = MailHelper.CreateSingleEmailToMultipleRecipients(from, to_addr, subject, plainTextContent, htmlContent);
             //string serverPath = System.Web.HttpContext.Current.Server.MapPath("~/Uploads/");
             // Attachment attachment = new Attachment();
             // attachment.Filename = serverPath;

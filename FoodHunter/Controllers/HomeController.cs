@@ -9,6 +9,7 @@ using System.IO;
 
 namespace FoodHunter.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class HomeController : Controller
     {
@@ -45,7 +46,7 @@ namespace FoodHunter.Controllers
             {
                 try
                 {
-                    String toEmail = model.ToEmail;
+                    string toEmail = model.ToEmail;
                     String subject = model.Subject;
                     String contents = model.Contents;
 
@@ -94,7 +95,7 @@ namespace FoodHunter.Controllers
                 return View();
             }
 
-            return View();
+             return View();
         }
 
 

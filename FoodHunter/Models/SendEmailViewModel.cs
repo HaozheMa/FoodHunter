@@ -10,7 +10,7 @@ namespace FoodHunter.Models
     {
         [Display(Name = "Email address")]
         [Required(ErrorMessage = "Please enter an email address.")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        
         public string ToEmail { get; set; }
 
         [Required(ErrorMessage = "Please enter a subject.")]

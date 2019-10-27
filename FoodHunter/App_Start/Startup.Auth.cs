@@ -58,11 +58,11 @@ namespace FoodHunter
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "752737420509-cf0bnqgj27cnota7is3aad6udcr0o8ql.apps.googleusercontent.com",
+                ClientSecret = "LU23iyjhguAJpAYjDgeAPkYU"
+            });
         }
     }
 }

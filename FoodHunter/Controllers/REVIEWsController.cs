@@ -10,107 +10,116 @@ using FoodHunter.Models;
 
 namespace FoodHunter.Controllers
 {
-    public class OwnersController : Controller
+    public class REVIEWsController : Controller
     {
-        private FoodHunter_Model db = new FoodHunter_Model();
+        private FoodHunters db = new FoodHunters();
 
-        // GET: Owners
+        // GET: REVIEWs
         public ActionResult Index()
         {
-            return View(db.Owners.ToList());
+            var rEVIEW = db.REVIEW.Include(r => r.AspNetUsers).Include(r => r.Restaurants);
+            return View(rEVIEW.ToList());
         }
 
-        // GET: Owners/Details/5
+        // GET: REVIEWs/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Owner owner = db.Owners.Find(id);
-            if (owner == null)
+            REVIEW rEVIEW = db.REVIEW.Find(id);
+            if (rEVIEW == null)
             {
                 return HttpNotFound();
             }
-            return View(owner);
+            return View(rEVIEW);
         }
 
-        // GET: Owners/Create
+        // GET: REVIEWs/Create
         public ActionResult Create()
         {
+            ViewBag.CustomerId = new SelectList(db.AspNetUsers, "Id", "Email");
+            ViewBag.RestaurantId = new SelectList(db.Restaurants, "Id", "Name");
             return View();
         }
 
-        // POST: Owners/Create
+        // POST: REVIEWs/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Gender,UserId")] Owner owner)
+        public ActionResult Create([Bind(Include = "Id,RestaurantId,Review1,Rating,CustomerId")] REVIEW rEVIEW)
         {
             if (ModelState.IsValid)
             {
-                db.Owners.Add(owner);
+                db.REVIEW.Add(rEVIEW);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(owner);
+            ViewBag.CustomerId = new SelectList(db.AspNetUsers, "Id", "Email", rEVIEW.CustomerId);
+            ViewBag.RestaurantId = new SelectList(db.Restaurants, "Id", "Name", rEVIEW.RestaurantId);
+            return View(rEVIEW);
         }
 
-        // GET: Owners/Edit/5
+        // GET: REVIEWs/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Owner owner = db.Owners.Find(id);
-            if (owner == null)
+            REVIEW rEVIEW = db.REVIEW.Find(id);
+            if (rEVIEW == null)
             {
                 return HttpNotFound();
             }
-            return View(owner);
+            ViewBag.CustomerId = new SelectList(db.AspNetUsers, "Id", "Email", rEVIEW.CustomerId);
+            ViewBag.RestaurantId = new SelectList(db.Restaurants, "Id", "Name", rEVIEW.RestaurantId);
+            return View(rEVIEW);
         }
 
-        // POST: Owners/Edit/5
+        // POST: REVIEWs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Gender,UserId")] Owner owner)
+        public ActionResult Edit([Bind(Include = "Id,RestaurantId,Review1,Rating,CustomerId")] REVIEW rEVIEW)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(owner).State = EntityState.Modified;
+                db.Entry(rEVIEW).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(owner);
+            ViewBag.CustomerId = new SelectList(db.AspNetUsers, "Id", "Email", rEVIEW.CustomerId);
+            ViewBag.RestaurantId = new SelectList(db.Restaurants, "Id", "Name", rEVIEW.RestaurantId);
+            return View(rEVIEW);
         }
 
-        // GET: Owners/Delete/5
+        // GET: REVIEWs/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Owner owner = db.Owners.Find(id);
-            if (owner == null)
+            REVIEW rEVIEW = db.REVIEW.Find(id);
+            if (rEVIEW == null)
             {
                 return HttpNotFound();
             }
-            return View(owner);
+            return View(rEVIEW);
         }
 
-        // POST: Owners/Delete/5
+        // POST: REVIEWs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Owner owner = db.Owners.Find(id);
-            db.Owners.Remove(owner);
+            REVIEW rEVIEW = db.REVIEW.Find(id);
+            db.REVIEW.Remove(rEVIEW);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

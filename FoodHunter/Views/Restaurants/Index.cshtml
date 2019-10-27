@@ -1,0 +1,91 @@
+﻿@model IEnumerable<FoodHunter.Models.Restaurants>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h2>Resturants List</h2>
+<style>
+    .mapboxgl-popup {
+        max-width: 400px;
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+</style>
+<div id="map" style="height:300px"></div>
+<p>
+    @if (User.IsInRole("Owner"))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BookStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Latitude)
+            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AspNetUsers.Email)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr  class="coordinates">
+    <td class="description">
+        @Html.DisplayFor(modelItem => item.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Address)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PhoneNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.BookStatus)
+    </td>
+   
+    <td class="longitude">
+        @Html.DisplayFor(modelItem => item.Longitude)
+    </td>
+    <td  class="latitude">
+        @Html.DisplayFor(modelItem => item.Latitude)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AspNetUsers.Email)
+    </td>
+    <td>
+        @if (User.IsInRole("Owner"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id })}|
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @if (!User.IsInRole("Owner"))
+        {
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })}
+    </td>
+</tr>
+    }
+
+</table>
+@section Scripts {
+    @Scripts.Render("~/bundles/mapbox")
+}
